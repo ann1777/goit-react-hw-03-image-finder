@@ -7,19 +7,40 @@ import {
     Input,
     InputIcn,
 } from './Searchbar.styled';
+import PropTypes from 'prop-types';
 
 class Searchbar extends Component {
     state = {
         inputValue: '',
     };
 
+    static propTypes = {
+       onSubmit: PropTypes.func.isRequired,
+    };
+
+    onInputChange = e => {
+        this.setState({
+            inputValue: e.target.value,
+        });
+    };
+
+    resetInput() {
+        this.setState({ inputValue: '' });
+    }
+
     render() {
         const { inputValue } = this.state;
+        const { onSubmit } = this.props;
 
         return (
             <SearchbarHeader>
                 <SearchbarForm
-                className="form">
+                className="form"
+                onSubmit={e => {
+                    e.preventDefault();
+                    onSubmit(inputValue);
+                    this.resetInput();
+                  }}>
                     <SearchButton 
                     type="submit"
                     className="button">
@@ -36,6 +57,7 @@ class Searchbar extends Component {
                     autoFocus
                     placeholder="Search images and photos"
                     value={inputValue}
+                    onChange={this.onInputChange}
                     />
                 </SearchbarForm>
             </SearchbarHeader>
