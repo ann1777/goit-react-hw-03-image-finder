@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 class Searchbar extends Component {
   state = {
     inputValue: '',
+    isLoading: false,
   };
 
   static propTypes = {
@@ -31,7 +32,7 @@ class Searchbar extends Component {
 
   render () {
     const { inputValue } = this.state;
-    const { onSubmit } = this.props;
+    const { onSubmit, isLoading } = this.props;
 
     return (
       <SearchbarHeader>
@@ -43,10 +44,10 @@ class Searchbar extends Component {
             this.resetInput();
           }}
         >
-          <SearchButton type='submit' className='button'>
+          <SearchButton type='submit' className='button' disabled={isLoading}>
             <SearchLabel className='button-label'>Search</SearchLabel>
           </SearchButton>
-          <InputIcn class='icon h2'>
+          <InputIcn className='icon h2'>
             <svg
               stroke='currentColor'
               fill='currentColor'

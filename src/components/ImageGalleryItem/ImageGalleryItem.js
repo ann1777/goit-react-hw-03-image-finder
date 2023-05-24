@@ -2,13 +2,13 @@ import PropTypes from 'prop-types';
 import { GalleryItem, GalleryImage } from './ImageGalleryItem.styled';
 
 const ImageGalleryItem = ({ item, onClick }) => {
-  const { webFormatUrl, tag, largeImageUrl } = item;
+  const { webFormatURL, tag, largeImageURL } = item;
   return (
     <GalleryItem>
       <GalleryImage
-        src={webFormatUrl}
+        src={webFormatURL}
         alt={tag}
-        onClick={() => onClick(largeImageUrl)}
+        onClick={() => onClick(largeImageURL)}
         loading='lazy'
       />
     </GalleryItem>
