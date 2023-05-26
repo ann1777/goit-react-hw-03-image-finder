@@ -5,7 +5,7 @@ import {ImageGallery} from './ImageGallery/ImageGallery';
 import Modal from './Modal/Modal';
 import { LoadButton } from './LoadButton/LoadButton'; 
 // import Loader from './Loader/Loader';
-import { ClearWaitingQueueParams, toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import handleFetch from '../services/pixabayapi';
 export class App extends Component {
   state = {
@@ -84,6 +84,7 @@ export class App extends Component {
         <ImageGallery images={images} />
         {showModal && <Modal url={url} onClose={this.toggleModal}/>}
         {loadMoreImgs && <LoadButton onLoadMore={this.onLoadMore} />}
+        <ToastContainer autoClose={1000} />
       </>
     )
   }
