@@ -8,7 +8,7 @@ import {
   InputIcn,
 } from './Searchbar.styled';
 import PropTypes from 'prop-types';
-import { ClearWaitingQueueParams } from 'react-toastify';
+
 
 class Searchbar extends Component {
   state = {
@@ -16,10 +16,11 @@ class Searchbar extends Component {
   };
 
   static propTypes = {
-    getInputValue: this.prototype.func.isRequired
+    getInputValue: PropTypes.func.isRequired
   };
 
   onInputChange = e => {
+    e.preventDefault();
     console.log(e.target.value)
     this.setState({
       query: e.target.value,
@@ -33,7 +34,7 @@ class Searchbar extends Component {
   search = e => {
     e.preventDefault();
     const { query } = this.state;
-    this.props.onInputChange(query);
+    this.props.getInputValue(query);
     this.setState({ query: '' });
   };
 
@@ -44,11 +45,9 @@ class Searchbar extends Component {
       <SearchbarHeader>
         <SearchbarForm
           className='form'
-          onSubmit={e => {
-            e.preventDefault();
-            this.search();
-            this.resetInput();
-          }}
+          onSubmit={
+            this.search
+          }
         >
           <SearchButton type='submit' className='button'>
             <SearchLabel className='button-label'>Search</SearchLabel>

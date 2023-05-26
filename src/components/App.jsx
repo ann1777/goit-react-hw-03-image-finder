@@ -49,7 +49,7 @@ export class App extends Component {
     return (
       <>
         <Searchbar getInputValue={this.getInputValue}/>
-        <ImageGallery inputValue={this.state.inputValue} onClick={this.getLargeImg} loadMoreBtn={this.onLoadMoreButton} page={ page}/>
+        <ImageGallery inputValue={this.state.inputValue} onClick={this.getLargeImg} loadMoreBtn={this.loadMoreButton} page={ page}/>
         {showModal && <Modal url={url} onClose={this.toggleModal} />}
       <ToastContainer/>
       </>
