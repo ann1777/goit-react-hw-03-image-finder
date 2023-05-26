@@ -81,7 +81,7 @@ export class App extends Component {
     return (
       <>
         <Searchbar getInputValue={this.getInputValue}/>
-        <ImageGallery images={images} />
+        <ImageGallery images={images} toggleModal={this.getLargeImg}/>
         {showModal && <Modal url={url} onClose={this.toggleModal}/>}
         {loadMoreImgs && <LoadButton onLoadMore={this.onLoadMore} />}
         <ToastContainer autoClose={1000} />

@@ -6,7 +6,7 @@ const ImageGalleryItem = ({url, toggleModal }) => {
       <GalleryItem>
         <GalleryImage
         src={url} 
-        onClick={() => toggleModal()} />
+        onClick={toggleModal} />
       </GalleryItem>
     </>
   );
