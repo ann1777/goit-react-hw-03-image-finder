@@ -1,20 +1,83 @@
+import { Component } from 'react';
 import PropTypes from 'prop-types';
-import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
+import getImages from '../../services/pixabayapi';
 import { Gallery } from './ImageGallery.styled';
+import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
+import Loader from '../Loader/Loader';
+import Button from '../LoadButton/LoadButton';
 
-const ImageGallery = ({ items, onClick }) => {
-  return (
-    <Gallery>
-      {items.map(item => {
-        return <ImageGalleryItem key={item.id} Item={item} onClick={onClick} />;
-      })}
-    </Gallery>
-  );
-};
+export class ImageGallery extends Component {
+  static propTypes = {
+    onClick: PropTypes.func.isRequired,
+    inputValue: PropTypes.string.isRequired,
+  };
 
-ImageGallery.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.object),
-  onClick: PropTypes.func.isRequired,
-};
+  state = {
+    images: [], status: 'idle',
+  };
 
-export default ImageGallery;
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.inputValue !== this.props.inputValue) {
+      this.fetchLoad();
+    }
+    if (prevProps.page !== this.props.page && this.props.page > 1) {
+      this.fetchLoadMore();
+    }
+  }
+
+  fetchLoad = () => {
+    const { inputValue, page } = this.props;
+
+    getImages(inputValue, page)
+      .then(response => {
+        this.setState({
+          images: response.hits,
+          status: 'resolve',
+        });
+      })
+      .catch(error => this.setState({ status: 'rejected' }));
+  };
+
+  onLoadMoreButton = () => {
+    const { inputValue, page } = this.props;
+
+    getImages(inputValue, page)
+      .then(response => {
+        this.setState(prevState => ({
+          images: [...prevState.images, ...response.hits],
+          status: 'resolve',
+        }));
+      })
+      .catch(error => this.setState({ status: 'rejected' }));
+  };
+
+  render() {
+    const { images, status } = this.state;
+
+    if (status === 'pending') {
+      return <Loader />;
+    }
+
+    if (status === 'resolve') {
+      return (
+        <>
+          <Gallery>
+            {images.map(({ id, largeImageURL, tags }) => (
+              <ImageGalleryItem
+                key={id}
+                url={largeImageURL}
+                tags={tags}
+                onClick={this.props.onClick}
+              />
+            ))}
+          </Gallery>
+          {this.state.images.length !== 0 ? (
+            <Button onClick={this.props.loadMoreBtn} />
+          ) : (
+            alert('No results')
+          )}
+        </>
+      );
+    }
+  }
+}

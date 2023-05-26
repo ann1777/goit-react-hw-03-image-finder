@@ -8,21 +8,21 @@ import {
   InputIcn,
 } from './Searchbar.styled';
 import PropTypes from 'prop-types';
+import { ClearWaitingQueueParams } from 'react-toastify';
 
 class Searchbar extends Component {
   state = {
-    inputValue: '',
-    isLoading: false,
+    query: '',
   };
 
   static propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-    isLoading: PropTypes.bool.isRequired,
+    getInputValue: this.prototype.func.isRequired
   };
 
   onInputChange = e => {
+    console.log(e.target.value)
     this.setState({
-      inputValue: e.target.value,
+      query: e.target.value,
     });
   };
 
@@ -30,9 +30,15 @@ class Searchbar extends Component {
     this.setState({ inputValue: '' });
   }
 
+  search = e => {
+    e.preventDefault();
+    const { query } = this.state;
+    this.props.onInputChange(query);
+    this.setState({ query: '' });
+  };
+
   render () {
-    const { inputValue } = this.state;
-    const { onSubmit, isLoading } = this.props;
+    const { query } = this.state;
 
     return (
       <SearchbarHeader>
@@ -40,11 +46,11 @@ class Searchbar extends Component {
           className='form'
           onSubmit={e => {
             e.preventDefault();
-            onSubmit(inputValue);
+            this.search();
             this.resetInput();
           }}
         >
-          <SearchButton type='submit' className='button' disabled={isLoading}>
+          <SearchButton type='submit' className='button'>
             <SearchLabel className='button-label'>Search</SearchLabel>
           </SearchButton>
           <InputIcn className='icon h2'>
@@ -91,7 +97,7 @@ class Searchbar extends Component {
             autocomplete='off'
             autoFocus
             placeholder='Search images and photos'
-            value={inputValue}
+            value={query}
             onChange={this.onInputChange}
           />
         </SearchbarForm>

@@ -1,27 +1,19 @@
 import PropTypes from 'prop-types';
 import { GalleryItem, GalleryImage } from './ImageGalleryItem.styled';
-
-const ImageGalleryItem = ({ item, onClick }) => {
-  const { webFormatURL, tag, largeImageURL } = item;
+const ImageGalleryItem = ({url, toggleModal }) => {
   return (
-    <GalleryItem>
-      <GalleryImage
-        src={webFormatURL}
-        alt={tag}
-        onClick={() => onClick(largeImageURL)}
-        loading='lazy'
-      />
-    </GalleryItem>
+    <>
+      <GalleryItem>
+        <GalleryImage
+        src={url} 
+        onClick={() => toggleModal(url)} />;
+      </GalleryItem>
+    </>
   );
 };
-
 ImageGalleryItem.propTypes = {
-  items: PropTypes.exact({
-    webFormatUrl: PropTypes.string,
-    tag: PropTypes.string,
-    largeImageUrl: PropTypes.string,
-  }),
-  onClick: PropTypes.func.isRequired,
+  items: PropTypes.array.isRequired,
+  toggleModal: PropTypes.func.isRequired,
 };
 
 export default ImageGalleryItem;

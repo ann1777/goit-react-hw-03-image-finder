@@ -35,8 +35,7 @@ class Modal extends Component {
         <ModalWindow>
           <img src={this.props.url} alt='' />
         </ModalWindow>
-      </Overlay>,
-      modalRoot
+      </Overlay>
     );
   }
 }
