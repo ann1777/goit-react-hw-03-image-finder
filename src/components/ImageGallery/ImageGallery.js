@@ -1,83 +1,22 @@
-import { Component } from 'react';
 import PropTypes from 'prop-types';
-import getImages from '../../services/pixabayapi';
-import { Gallery } from './ImageGallery.styled';
+import handleFetch from '../../services/pixabayapi';
+import { ImgGallery } from './ImageGallery.styled';
+
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
-import Loader from '../Loader/Loader';
-import Button from '../LoadButton/LoadButton';
 
-export class ImageGallery extends Component {
-  static propTypes = {
-    onClick: PropTypes.func.isRequired,
-    inputValue: PropTypes.string.isRequired,
-  };
-
-  state = {
-    images: [], status: 'idle',
-  };
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.inputValue !== this.props.inputValue) {
-      this.fetchLoad();
-    }
-    if (prevProps.page !== this.props.page && this.props.page > 1) {
-      this.fetchLoadMore();
-    }
-  }
-
-  fetchLoad = () => {
-    const { inputValue, page } = this.props;
-
-    getImages(inputValue, page)
-      .then(response => {
-        this.setState({
-          images: response.hits,
-          status: 'resolve',
-        });
-      })
-      .catch(error => this.setState({ status: 'rejected' }));
-  };
-
-  onLoadMoreButton = () => {
-    const { inputValue, page } = this.props;
-
-    getImages(inputValue, page)
-      .then(response => {
-        this.setState(prevState => ({
-          images: [...prevState.images, ...response.hits],
-          status: 'resolve',
-        }));
-      })
-      .catch(error => this.setState({ status: 'rejected' }));
-  };
-
-  render() {
-    const { images, status } = this.state;
-
-    if (status === 'pending') {
-      return <Loader />;
-    }
-
-    if (status === 'resolve') {
-      return (
-        <>
-          <Gallery>
-            {images.map(({ id, largeImageURL, tags }) => (
-              <ImageGalleryItem
-                key={id}
-                url={largeImageURL}
-                tags={tags}
-                onClick={this.props.onClick}
-              />
-            ))}
-          </Gallery>
-          {this.state.images.length !== 0 ? (
-            <Button onClick={this.props.loadMoreBtn} />
-          ) : (
-            alert('No results')
-          )}
-        </>
-      );
-    }
-  }
-}
+export const ImageGallery = ({ images }) => {
+  return (
+    <>
+      <ImgGallery>
+        {images.map(({ id, largeImageURL, tags }) => (
+          <ImageGalleryItem
+            key={id}
+            url={largeImageURL}
+            tags={tags}
+            // onClick={handleFetch}
+          />
+        ))}
+      </ImgGallery>
+    </>
+  );
+};

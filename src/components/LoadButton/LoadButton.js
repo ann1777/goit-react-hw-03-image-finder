@@ -1,10 +1,10 @@
 import { LoadMoreBtn, LBContainer } from './LoadButton.styled';
 import PropTypes from 'prop-types';
 
-const LoadButton = ({ onLoadMore, isLoading }) => {
+export const LoadButton = ({ onLoadMore }) => {
   return (
     <LBContainer>
-      <LoadMoreBtn type='button' onClick={onLoadMore} disabled={isLoading}>
+      <LoadMoreBtn type='button' onClick={onLoadMore}>
         Load more
       </LoadMoreBtn>
     </LBContainer>
@@ -13,7 +13,4 @@ const LoadButton = ({ onLoadMore, isLoading }) => {
 
 LoadButton.propTypes = {
   onLoadMore: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired,
 };
-
-export default LoadButton;

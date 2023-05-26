@@ -6,13 +6,12 @@ const ImageGalleryItem = ({url, toggleModal }) => {
       <GalleryItem>
         <GalleryImage
         src={url} 
-        onClick={() => toggleModal(url)} />;
+        onClick={() => toggleModal()} />
       </GalleryItem>
     </>
   );
 };
 ImageGalleryItem.propTypes = {
-  items: PropTypes.array.isRequired,
   toggleModal: PropTypes.func.isRequired,
 };
 
