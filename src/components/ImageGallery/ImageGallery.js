@@ -2,7 +2,7 @@ import { ImgGallery } from './ImageGallery.styled';
 
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
 
-export const ImageGallery = ({ images }) => {
+export const ImageGallery = ({ images, toggleModal }) => {
   return (
     <>
       <ImgGallery>
@@ -11,6 +11,7 @@ export const ImageGallery = ({ images }) => {
             key={id}
             url={largeImageURL}
             tags={tags}
+            toggleModal={toggleModal}
           />
         ))}
       </ImgGallery>

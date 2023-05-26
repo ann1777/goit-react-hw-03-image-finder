@@ -76,13 +76,14 @@ export class App extends Component {
 
   render () {
 
-    const { url, showModal, page, totalPage, images } = this.state;
+    const { modalImg, showModal, page, totalPage, images } = this.state;
     const loadMoreImgs = page < totalPage;
+    console.log(showModal, modalImg)
     return (
       <>
         <Searchbar getInputValue={this.getInputValue}/>
         <ImageGallery images={images} toggleModal={this.getLargeImg}/>
-        {showModal && <Modal url={url} onClose={this.toggleModal}/>}
+        {showModal && <Modal url={modalImg} onClose={this.toggleModal}/>}
         {loadMoreImgs && <LoadButton onLoadMore={this.onLoadMore} />}
         <ToastContainer autoClose={1000} />
       </>

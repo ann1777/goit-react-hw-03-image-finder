@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import { GalleryItem, GalleryImage } from './ImageGalleryItem.styled';
-const ImageGalleryItem = ({url, toggleModal }) => {
+const ImageGalleryItem = ({url, tags, toggleModal }) => {
   return (
     <>
       <GalleryItem>
         <GalleryImage
-        src={url} 
-        onClick={toggleModal} />
+        src={url}
+        alt={tags} 
+        onClick={()=>toggleModal(url)} />
       </GalleryItem>
     </>
   );
