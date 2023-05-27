@@ -18,45 +18,19 @@ export class App extends Component {
   };
 
   resetPage = () => {
-    this.setState({page: 1});
+    this.setState({ page: 1 });
   };
-  async componentDidUpdate(_, prevState) {
-    if (this.state.status === 'pending') {
-        const data = await handleFetch(this.state.inputValue).then(
-          this.setState({ status: 'loading' })
-        );
 
-        if (data.hits.length === 12) {
-          return this.setState(
-            prevState.inputValue !== this.state.inputValue
-              ? {
-                  images: data.hits,
-                  status: 'loaded',
-                }
-              : {
-                  images: [...prevState.images, ...data.hits],
-                  status: 'loaded',
-                }
-          );
-        }
-        if (data.hits.length === 0) {
-          return this.setState({ photos: [], status: 'rejected' });
-        }
-        return this.setState(
-          prevState.inputValue !== this.state.inputValue
-            ? {
-                images: data.hits,
-                status: 'idle',
-              }
-            : {
-                images: [...prevState.images, ...data.hits],
-                status: 'idle',
-              }
-        );
-      }
+  componentDidUpdate(_, prevState) {
+    if (
+      prevState.searchQuery !== this.state.searchQuery ||
+      prevState.page !== this.state.page
+    ) {
+      this.handleFetch();
     }
+  }
 
-  fetchImages = async () => {
+  async handleFetch() {
     try {
       const { inputValue, page } = this.state;
 
@@ -80,7 +54,7 @@ export class App extends Component {
       }
     } catch (error) {
       this.setState({ isLoading: false });
-      toast.error('Error fetching images');
+      return toast.error('Error fetching images');
     }
   };
 
@@ -105,15 +79,40 @@ export class App extends Component {
     }));
   };
 
+  handleChange = e => {
+    this.setState({ query: e.target.value });
+  };
+
+  handleSearch = e => {
+    e.preventDefault();
+    const { inputValue } = this.state;
+    if (!inputValue) {
+      toast.error('Please enter a search query');
+      return;
+    }
+    this.props.onSubmit(inputValue);
+    this.setState({ inputValue: '' });
+  };
+
   render() {
-    const { modalImg, showModal, page, totalPage, images } = this.state;
+    const { modalImg, showModal, page, totalPage, images, inputValue } = this.state;
     const loadMoreImgs = page < totalPage;
-    console.log(showModal, modalImg);
+    console.log(page, images);
     return (
       <>
-        <Searchbar getInputValue={this.getInputValue} />
+        <Searchbar
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+          value={inputValue}
+          getInputValue={this.getInputValue}
+          onSubmit={this.handleChange}
+        />
         <ImageGallery images={images} toggleModal={this.getLargeImg} />
-        {showModal && createPortal(<Modal url={modalImg} onClose={this.toggleModal} />,
+        {showModal &&
+          createPortal(
+            <Modal url={modalImg} onClose={this.toggleModal} />,
             document.body
           )}
         {this.state.status === 'loaded' && (
@@ -125,7 +124,7 @@ export class App extends Component {
             I was too lazy to style it. Hell, at least it removed that "Load
             More" button from showing
           </div>
-        )}  
+        )}
         {loadMoreImgs && <LoadButton onLoadMore={this.onLoadMore} />}
         <ToastContainer autoClose={1000} />
       </>
