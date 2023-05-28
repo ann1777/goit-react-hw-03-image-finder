@@ -26,6 +26,7 @@ export class App extends Component {
       prevState.inputValue !== this.state.inputValue ||
       prevState.page !== this.state.page
     ) {
+      this.setState({images: []})
       this.handleFetch();
     }
   }
@@ -60,7 +61,7 @@ export class App extends Component {
 
   getInputValue = handleValue => {
     this.resetPage();
-    this.setState({ status: 'pending', inputValue: handleValue });
+    this.setState({ inputValue: handleValue });
   };
 
   toggleModal = () => {
