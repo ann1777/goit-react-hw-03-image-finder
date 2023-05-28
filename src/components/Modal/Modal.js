@@ -1,17 +1,11 @@
 import { Component } from 'react';
 import { createPortal } from 'react-dom';
-import PropTypes from 'prop-types';
 import { Overlay, ModalWindow } from './Modal.styled';
 import React from 'react'
-const root = document.getElementById('root')
 const modalRoot = document.getElementById('modal-root')
 console.log(modalRoot)
 class Modal extends Component {
   el = document.createElement('div')
-  // static propTypes = {
-  //   onclose: PropTypes.func.isRequired,
-  //   url: PropTypes.string.isRequired,
-  // };
 
   componentDidMount () {
     modalRoot.appendChild(this.el);

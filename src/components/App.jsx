@@ -97,7 +97,7 @@ export class App extends Component {
   render() {
     const { modalImg, showModal, page, totalPage, images, inputValue } = this.state;
     const loadMoreImgs = page < totalPage;
-    console.log(page, images);
+    // console.log(page, images);
     return (
       <>
         <Searchbar
