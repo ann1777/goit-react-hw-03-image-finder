@@ -23,7 +23,7 @@ export class App extends Component {
 
   componentDidUpdate(_, prevState) {
     if (
-      prevState.searchQuery !== this.state.searchQuery ||
+      prevState.inputValue !== this.state.inputValue ||
       prevState.page !== this.state.page
     ) {
       this.handleFetch();
