@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { GalleryItemStyle } from './ImageGalleryItem.styled';
 
-const ImageGalleryItem = ({ image, togleModal }) => {
+const ImageGalleryItem = ({ url, tags, togleModal }) => {
   return (
     <GalleryItemStyle.GallerryItem>
       <GalleryItemStyle.GallerryItemImg
-        url={image.webformatURL}
-        alt=""
+        src={url}
+        alt={tags}
         onClick={togleModal(url)}
       />
     </GalleryItemStyle.GallerryItem>
@@ -15,9 +15,8 @@ const ImageGalleryItem = ({ image, togleModal }) => {
 };
 
 ImageGalleryItem.propTypes = {
-  image: PropTypes.shape({
-    url: PropTypes.string.isRequired,
-  }).isRequired,
+  url: PropTypes.string.isRequired,
+  tags: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
