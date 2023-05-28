@@ -81,7 +81,7 @@ export class App extends Component {
   };
 
   handleChange = e => {
-    this.setState({ query: e.target.value });
+    this.setState({ inputvalue: e.target.value });
   };
 
   handleSearch = e => {
