@@ -6,7 +6,7 @@ const ImageGalleryItem = ({ image, togleModal }) => {
   return (
     <GalleryItemStyle.GallerryItem>
       <GalleryItemStyle.GallerryItemImg
-        src={image.webformatURL}
+        url={image.webformatURL}
         alt=""
         onClick={togleModal(url)}
       />
