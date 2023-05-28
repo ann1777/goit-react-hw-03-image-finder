@@ -16,7 +16,7 @@ const ImageGalleryItem = ({ image, togleModal }) => {
 
 ImageGalleryItem.propTypes = {
   image: PropTypes.shape({
-    webformatURL: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
   }).isRequired,
   onClick: PropTypes.func.isRequired,
 };
