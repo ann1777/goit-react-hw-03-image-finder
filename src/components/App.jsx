@@ -78,7 +78,6 @@ export class App extends Component {
   };
 
   onLoadMore = () => {
-    this.setState({ status: 'pending' });
     this.setState(prevState => ({
       page: prevState.page + 1,
     }));
@@ -97,6 +96,7 @@ export class App extends Component {
     }
     this.props.onSubmit(inputValue);
     this.setState({ inputValue: '' });
+    this.setState({images: []});
   };
 
   render() {
