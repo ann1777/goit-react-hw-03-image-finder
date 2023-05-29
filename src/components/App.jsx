@@ -23,10 +23,14 @@ export class App extends Component {
 
   componentDidUpdate(_, prevState) {
     if (
-      prevState.inputValue !== this.state.inputValue ||
-      prevState.page !== this.state.page
+      prevState.inputValue !== this.state.inputValue 
     ) {
       this.setState({images: []})
+      this.handleFetch();
+    }
+    else if (
+      prevState.page !== this.state.page
+    ) {
       this.handleFetch();
     }
   }
